@@ -1,9 +1,17 @@
 import RootLayout from "@/components/Layouts/RootLayout";
 import AllNews from "@/components/UI/AllNews";
-import Banner from "@/components/UI/Banner";
+import { useGetNewsesQuery } from "@/redux/api/api";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
-const HomePage = ({ allNews }) => {
+const HomePage = () => {
+  const { data, isLoading, isError, error } = useGetNewsesQuery();
+
+  const DynamicBanner = dynamic(() => import("@/components/UI/Banner"), {
+    loading: () => <h1>Loadinggggg.....</h1>,
+    ssr: false
+  });
+
   return (
     <>
       <Head>
@@ -15,8 +23,8 @@ const HomePage = ({ allNews }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Banner />
-      <AllNews allNews={allNews}></AllNews>
+      <DynamicBanner />
+      <AllNews allNews={data}></AllNews>
     </>
   );
 };
@@ -26,14 +34,13 @@ HomePage.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
 };
 
-export const getStaticProps = async () => {
-  const res = await fetch("http://localhost:5000/news");
-  const data = await res.json();
+// export const getServerSideProps = async () => {
+//   const res = await fetch("http://localhost:5000/news");
+//   const data = await res.json();
 
-  return {
-    props: {
-      allNews: data,
-    },
-    revalidate: 30,
-  };
-};
+//   return {
+//     props: {
+//       allNews: data,
+//     },
+//   };
+// };
