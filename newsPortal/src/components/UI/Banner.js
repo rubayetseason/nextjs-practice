@@ -8,6 +8,7 @@ import {
 import Image from "next/image";
 import DrawingImage from "@/assets/images/banner-images/drawing_image.jpg";
 import EagleImage from "@/assets/images/banner-images/eagle_image.jpg";
+import styles from "@/components/UI/Banner.module.css";
 
 const contentStyle = {
   height: "425px",
@@ -24,7 +25,7 @@ const Banner = () => (
             span: 8,
           }}
         >
-          <h1 style={{ fontSize: "50px" }}>
+          <h1 className={styles.heading}>
             LET&apos;S BUILD
             <br />
             YOUR CAREER
