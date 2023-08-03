@@ -6,6 +6,7 @@ import { useSession, signOut } from "next-auth/react";
 const Navbar = () => {
   const { data: session } = useSession();
 
+  console.log("from header", session);
   return (
     <Header
       style={{
